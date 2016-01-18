@@ -33,12 +33,13 @@ void setupSwitch()
   // Set Port D, Pin 2 to use a Pull-up resistor
   PORTD |= (1 << 2);
 
-  // TODO: Clear interrupt enable
-
-  // TODO: Set interrupt sense type to trigger on any logic change
-
-  // TODO: enable interrupt
-
+  // Clear interrupt enable
+  EIMSK &= ~(1 << 2);
+  // Set interrupt sense type to trigger on any logic change
+  EICRA |= (1 << 4);
+  EICRA &= ~(1 << 5);
+  // enable interrupt
+  EIMSK |= (1 << 2);
 }
 
 void setLED(int state)
@@ -47,11 +48,11 @@ void setLED(int state)
   // state 0 means "OFF"
   if (state == 1)
   {
-    // TODO: set F0 to HIGH
+    PORTF |= (1 << 0);
   }
   else
   {
-    // TODO: set F0 to LOW
+    PORTF &= ~(1 << 0);
   }
 }
 
@@ -60,23 +61,31 @@ int core(void)
   CPU_PRESCALE(0x01);
   setupLED();
   setupSwitch();
-  // TODO: enable global interrupts
+  sei();
 
-  // TODO: create a state variable
+  // starts "on"
+  int state = 1;
 
   while (1)
   {
-    // Do regular processing (nothing in this lesson)
+    // do whatever
 
     if (flag == 1)
     {
-      // TODO:
-      // 1) disable interrupts
-      // 2) Read switch value
-      // 3) Set LED to HIGH or LOW
-      // 4) re-enable interrupts
+      cli();
+      // Read state of pin
+      state = (PIND >> 2) & 1;
+      // set the LED state
+      setLED(state);
+      // reset flag
+      flag = 0;
+      sei();
     }
   }
 }
 
-// TODO: Write interrupt service routine for INT2
+ISR(INT2_vect)
+{
+  flag = 1;
+}
+
