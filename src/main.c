@@ -63,19 +63,23 @@ int core(void)
   setupSwitch();
   sei();
 
-  int state = 0;
+  // starts "on"
+  int state = 1;
 
   while (1)
   {
     // do whatever
+
     if (flag == 1)
     {
+      cli();
       // Read state of pin
-      state = PIND & (1 << 2);
+      state = (PIND >> 2) & 1;
       // set the LED state
       setLED(state);
       // reset flag
       flag = 0;
+      sei();
     }
   }
 }

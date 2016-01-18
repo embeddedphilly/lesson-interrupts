@@ -164,141 +164,154 @@
  108               		.loc 1 63 0
  109 0010 0E94 0000 		call setupSwitch
  110               	.LVL2:
+ 111               	.L11:
   64:src/main.c    ****   sei();
- 111               		.loc 1 64 0
- 112               	/* #APP */
- 113               	 ;  64 "src/main.c" 1
- 114 0014 7894      		sei
- 115               	 ;  0 "" 2
- 116               	.LVL3:
- 117               	/* #NOAPP */
- 118               	.L9:
+ 112               		.loc 1 64 0
+ 113               	/* #APP */
+ 114               	 ;  64 "src/main.c" 1
+ 115 0014 7894      		sei
+ 116               	 ;  0 "" 2
+ 117               	.LVL3:
+ 118               	/* #NOAPP */
+ 119               	.L9:
   65:src/main.c    **** 
-  66:src/main.c    ****   int state = 0;
-  67:src/main.c    **** 
-  68:src/main.c    ****   while (1)
-  69:src/main.c    ****   {
-  70:src/main.c    ****     // do whatever
-  71:src/main.c    ****     if (flag == 1)
- 119               		.loc 1 71 0
- 120 0016 8091 0000 		lds r24,flag
- 121 001a 9091 0000 		lds r25,flag+1
- 122 001e 0197      		sbiw r24,1
- 123 0020 01F4      		brne .L9
-  72:src/main.c    ****     {
-  73:src/main.c    ****       // Read state of pin
-  74:src/main.c    ****       state = PIND & (1 << 2);
- 124               		.loc 1 74 0
- 125 0022 89B1      		in r24,0x9
- 126               	.LVL4:
- 127 0024 8470      		andi r24,lo8(4)
- 128               	.LVL5:
-  75:src/main.c    ****       // set the LED state
-  76:src/main.c    ****       setLED(state);
- 129               		.loc 1 76 0
- 130 0026 90E0      		ldi r25,0
- 131 0028 0E94 0000 		call setLED
- 132               	.LVL6:
-  77:src/main.c    ****       // reset flag
-  78:src/main.c    ****       flag = 0;
- 133               		.loc 1 78 0
- 134 002c 1092 0000 		sts flag+1,__zero_reg__
- 135 0030 1092 0000 		sts flag,__zero_reg__
- 136 0034 00C0      		rjmp .L9
- 137               		.cfi_endproc
- 138               	.LFE8:
- 140               		.section	.text.startup.main,"ax",@progbits
- 141               	.global	main
- 143               	main:
- 144               	.LFB4:
+  66:src/main.c    ****   // starts "on"
+  67:src/main.c    ****   int state = 1;
+  68:src/main.c    **** 
+  69:src/main.c    ****   while (1)
+  70:src/main.c    ****   {
+  71:src/main.c    ****     // do whatever
+  72:src/main.c    **** 
+  73:src/main.c    ****     if (flag == 1)
+ 120               		.loc 1 73 0
+ 121 0016 8091 0000 		lds r24,flag
+ 122 001a 9091 0000 		lds r25,flag+1
+ 123 001e 0197      		sbiw r24,1
+ 124 0020 01F4      		brne .L9
+  74:src/main.c    ****     {
+  75:src/main.c    ****       cli();
+ 125               		.loc 1 75 0
+ 126               	/* #APP */
+ 127               	 ;  75 "src/main.c" 1
+ 128 0022 F894      		cli
+ 129               	 ;  0 "" 2
+  76:src/main.c    ****       // Read state of pin
+  77:src/main.c    ****       state = (PIND >> 2) & 1;
+ 130               		.loc 1 77 0
+ 131               	/* #NOAPP */
+ 132 0024 89B1      		in r24,0x9
+ 133               	.LVL4:
+  78:src/main.c    ****       // set the LED state
+  79:src/main.c    ****       setLED(state);
+ 134               		.loc 1 79 0
+ 135 0026 82FB      		bst r24,2
+ 136 0028 8827      		clr r24
+ 137 002a 80F9      		bld r24,0
+ 138               	.LVL5:
+ 139 002c 90E0      		ldi r25,0
+ 140 002e 0E94 0000 		call setLED
+ 141               	.LVL6:
+  80:src/main.c    ****       // reset flag
+  81:src/main.c    ****       flag = 0;
+ 142               		.loc 1 81 0
+ 143 0032 1092 0000 		sts flag+1,__zero_reg__
+ 144 0036 1092 0000 		sts flag,__zero_reg__
+ 145 003a 00C0      		rjmp .L11
+ 146               		.cfi_endproc
+ 147               	.LFE8:
+ 149               		.section	.text.startup.main,"ax",@progbits
+ 150               	.global	main
+ 152               	main:
+ 153               	.LFB4:
   16:src/main.c    **** {
- 145               		.loc 1 16 0
- 146               		.cfi_startproc
- 147               	/* prologue: function */
- 148               	/* frame size = 0 */
- 149               	/* stack size = 0 */
- 150               	.L__stack_usage = 0
+ 154               		.loc 1 16 0
+ 155               		.cfi_startproc
+ 156               	/* prologue: function */
+ 157               	/* frame size = 0 */
+ 158               	/* stack size = 0 */
+ 159               	.L__stack_usage = 0
   17:src/main.c    ****   core();
- 151               		.loc 1 17 0
- 152 0000 0E94 0000 		call core
- 153               	.LVL7:
- 154               		.cfi_endproc
- 155               	.LFE4:
- 157               		.section	.text.__vector_3,"ax",@progbits
- 158               	.global	__vector_3
- 160               	__vector_3:
- 161               	.LFB9:
-  79:src/main.c    ****     }
-  80:src/main.c    ****   }
-  81:src/main.c    **** }
-  82:src/main.c    **** 
-  83:src/main.c    **** ISR(INT2_vect)
-  84:src/main.c    **** {
- 162               		.loc 1 84 0
- 163               		.cfi_startproc
- 164 0000 1F92      		push r1
- 165               	.LCFI0:
- 166               		.cfi_def_cfa_offset 3
- 167               		.cfi_offset 1, -2
- 168 0002 0F92      		push r0
- 169               	.LCFI1:
- 170               		.cfi_def_cfa_offset 4
- 171               		.cfi_offset 0, -3
- 172 0004 0FB6      		in r0,__SREG__
- 173 0006 0F92      		push r0
- 174 0008 1124      		clr __zero_reg__
- 175 000a 8F93      		push r24
- 176               	.LCFI2:
- 177               		.cfi_def_cfa_offset 5
- 178               		.cfi_offset 24, -4
- 179 000c 9F93      		push r25
- 180               	.LCFI3:
- 181               		.cfi_def_cfa_offset 6
- 182               		.cfi_offset 25, -5
- 183               	/* prologue: Signal */
- 184               	/* frame size = 0 */
- 185               	/* stack size = 5 */
- 186               	.L__stack_usage = 5
-  85:src/main.c    ****   flag = 1;
- 187               		.loc 1 85 0
- 188 000e 81E0      		ldi r24,lo8(1)
- 189 0010 90E0      		ldi r25,0
- 190 0012 9093 0000 		sts flag+1,r25
- 191 0016 8093 0000 		sts flag,r24
- 192               	/* epilogue start */
-  86:src/main.c    **** }
- 193               		.loc 1 86 0
- 194 001a 9F91      		pop r25
- 195 001c 8F91      		pop r24
- 196 001e 0F90      		pop r0
- 197 0020 0FBE      		out __SREG__,r0
- 198 0022 0F90      		pop r0
- 199 0024 1F90      		pop r1
- 200 0026 1895      		reti
- 201               		.cfi_endproc
- 202               	.LFE9:
- 204               	.global	flag
- 205               		.section .bss
- 208               	flag:
- 209 0000 0000      		.zero	2
- 210               		.text
- 211               	.Letext0:
- 212               		.file 2 "/usr/local/CrossPack-AVR-20131216/avr/include/stdint.h"
+ 160               		.loc 1 17 0
+ 161 0000 0E94 0000 		call core
+ 162               	.LVL7:
+ 163               		.cfi_endproc
+ 164               	.LFE4:
+ 166               		.section	.text.__vector_3,"ax",@progbits
+ 167               	.global	__vector_3
+ 169               	__vector_3:
+ 170               	.LFB9:
+  82:src/main.c    ****       sei();
+  83:src/main.c    ****     }
+  84:src/main.c    ****   }
+  85:src/main.c    **** }
+  86:src/main.c    **** 
+  87:src/main.c    **** ISR(INT2_vect)
+  88:src/main.c    **** {
+ 171               		.loc 1 88 0
+ 172               		.cfi_startproc
+ 173 0000 1F92      		push r1
+ 174               	.LCFI0:
+ 175               		.cfi_def_cfa_offset 3
+ 176               		.cfi_offset 1, -2
+ 177 0002 0F92      		push r0
+ 178               	.LCFI1:
+ 179               		.cfi_def_cfa_offset 4
+ 180               		.cfi_offset 0, -3
+ 181 0004 0FB6      		in r0,__SREG__
+ 182 0006 0F92      		push r0
+ 183 0008 1124      		clr __zero_reg__
+ 184 000a 8F93      		push r24
+ 185               	.LCFI2:
+ 186               		.cfi_def_cfa_offset 5
+ 187               		.cfi_offset 24, -4
+ 188 000c 9F93      		push r25
+ 189               	.LCFI3:
+ 190               		.cfi_def_cfa_offset 6
+ 191               		.cfi_offset 25, -5
+ 192               	/* prologue: Signal */
+ 193               	/* frame size = 0 */
+ 194               	/* stack size = 5 */
+ 195               	.L__stack_usage = 5
+  89:src/main.c    ****   flag = 1;
+ 196               		.loc 1 89 0
+ 197 000e 81E0      		ldi r24,lo8(1)
+ 198 0010 90E0      		ldi r25,0
+ 199 0012 9093 0000 		sts flag+1,r25
+ 200 0016 8093 0000 		sts flag,r24
+ 201               	/* epilogue start */
+  90:src/main.c    **** }
+ 202               		.loc 1 90 0
+ 203 001a 9F91      		pop r25
+ 204 001c 8F91      		pop r24
+ 205 001e 0F90      		pop r0
+ 206 0020 0FBE      		out __SREG__,r0
+ 207 0022 0F90      		pop r0
+ 208 0024 1F90      		pop r1
+ 209 0026 1895      		reti
+ 210               		.cfi_endproc
+ 211               	.LFE9:
+ 213               	.global	flag
+ 214               		.section .bss
+ 217               	flag:
+ 218 0000 0000      		.zero	2
+ 219               		.text
+ 220               	.Letext0:
+ 221               		.file 2 "/usr/local/CrossPack-AVR-20131216/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:2      *ABS*:0000003e __SP_H__
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:3      *ABS*:0000003d __SP_L__
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:4      *ABS*:0000003f __SREG__
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:5      *ABS*:0000003b __RAMPZ__
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:14     .text.setupLED:00000000 setupLED
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:34     .text.setupSwitch:00000000 setupSwitch
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:67     .text.setLED:00000000 setLED
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:92     .text.core:00000000 core
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:208    .bss:00000000 flag
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:143    .text.startup.main:00000000 main
-/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc6dVWX6.s:160    .text.__vector_3:00000000 __vector_3
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:2      *ABS*:0000003e __SP_H__
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:3      *ABS*:0000003d __SP_L__
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:4      *ABS*:0000003f __SREG__
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:5      *ABS*:0000003b __RAMPZ__
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:14     .text.setupLED:00000000 setupLED
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:34     .text.setupSwitch:00000000 setupSwitch
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:67     .text.setLED:00000000 setLED
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:92     .text.core:00000000 core
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:217    .bss:00000000 flag
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:152    .text.startup.main:00000000 main
+/var/folders/g0/nxlvnzhd5ms9ywmz7z4b5pnm0000gn/T//cc4JUtf2.s:169    .text.__vector_3:00000000 __vector_3
 
 UNDEFINED SYMBOLS
 __do_clear_bss

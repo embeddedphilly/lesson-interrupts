@@ -153,7 +153,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x144
+.text           0x00000000      0x14a
  *(.vectors)
  .vectors       0x00000000       0x98 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtusb1286.o
                 0x00000000                __vectors
@@ -255,19 +255,19 @@ END GROUP
                 0x000000c0                setupSwitch
  .text.setLED   0x000000da        0xc bin/main.o
                 0x000000da                setLED
- .text.core     0x000000e6       0x30 bin/main.o
+ .text.core     0x000000e6       0x36 bin/main.o
                 0x000000e6                core
  .text.startup.main
-                0x00000116        0x2 bin/main.o
-                0x00000116                main
+                0x0000011c        0x2 bin/main.o
+                0x0000011c                main
  .text.__vector_3
-                0x00000118       0x28 bin/main.o
-                0x00000118                __vector_3
-                0x00000140                . = ALIGN (0x2)
+                0x0000011e       0x28 bin/main.o
+                0x0000011e                __vector_3
+                0x00000146                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000140        0x0 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_exit.o)
-                0x00000140                exit
-                0x00000140                _exit
+ .fini9         0x00000146        0x0 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_exit.o)
+                0x00000146                exit
+                0x00000146                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -286,11 +286,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000140        0x4 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_exit.o)
+ .fini0         0x00000146        0x4 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_exit.o)
  *(.fini0)
-                0x00000144                _etext = .
+                0x0000014a                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000144
+.data           0x00800100        0x0 load address 0x0000014a
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtusb1286.o
@@ -313,8 +313,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 0x00800102                PROVIDE (__bss_end, .)
-                0x00000144                __data_load_start = LOADADDR (.data)
-                0x00000144                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000014a                __data_load_start = LOADADDR (.data)
+                0x0000014a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800102        0x0
                 0x00800102                PROVIDE (__noinit_start, .)
@@ -402,11 +402,11 @@ END GROUP
  .debug_abbrev  0x000000e0       0x14 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_exit.o)
  .debug_abbrev  0x000000f4       0x14 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_clear_bss.o)
 
-.debug_line     0x00000000      0x189
+.debug_line     0x00000000      0x18c
  *(.debug_line)
- .debug_line    0x00000000       0xd3 bin/main.o
- .debug_line    0x000000d3       0x58 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_exit.o)
- .debug_line    0x0000012b       0x5e /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_clear_bss.o)
+ .debug_line    0x00000000       0xd6 bin/main.o
+ .debug_line    0x000000d6       0x58 /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_exit.o)
+ .debug_line    0x0000012e       0x5e /usr/local/CrossPack-AVR-20131216/lib/gcc/avr/4.8.1/avr51/libgcc.a(_clear_bss.o)
 
 .debug_frame    0x00000000       0x8c
  *(.debug_frame)
@@ -417,9 +417,9 @@ END GROUP
  .debug_str     0x00000000      0x138 bin/main.o
                                 0x16c (size before relaxing)
 
-.debug_loc      0x00000000       0x63
+.debug_loc      0x00000000       0x71
  *(.debug_loc)
- .debug_loc     0x00000000       0x63 bin/main.o
+ .debug_loc     0x00000000       0x71 bin/main.o
 
 .debug_macinfo
  *(.debug_macinfo)
