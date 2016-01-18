@@ -5,7 +5,7 @@ CC = avr-gcc
 OBJCOPY = avr-objcopy
 OBJDUMP = avr-objdump
 SIZE = avr-size
-TARGET = lesson-interrupts
+TARGET = teensy2program
 SRC =	src/main.c \
 
 AVRSRC = lib/TeensyHAL/src/TeensyGPIO.c
