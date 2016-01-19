@@ -7,7 +7,7 @@
 int core(void);
 void setupLED(void);
 void setupSwitch(void);
-void setLED(int state);
+void setLED(int status);
 
 volatile int flag = 0;
 
@@ -41,11 +41,11 @@ void setupSwitch()
 
 }
 
-void setLED(int state)
+void setLED(int status)
 {
-  // state 1 means "ON"
-  // state 0 means "OFF"
-  if (state == 1)
+  // status 1 means "ON"
+  // status 0 means "OFF"
+  if (status == 1)
   {
     // TODO: set F0 to HIGH
   }
@@ -62,7 +62,7 @@ int core(void)
   setupSwitch();
   // TODO: enable global interrupts
 
-  // TODO: create a state variable
+  // TODO: create a status variable
 
   while (1)
   {

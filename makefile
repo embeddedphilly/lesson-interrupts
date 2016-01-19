@@ -82,3 +82,4 @@ clean:
 	rm -rf bin/*.o
 	rm -rf $(TARGET).hex
 	rm -rf bin/*.lst
+	rm -rf *.map

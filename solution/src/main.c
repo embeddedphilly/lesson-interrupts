@@ -7,7 +7,7 @@
 int core(void);
 void setupLED(void);
 void setupSwitch(void);
-void setLED(int state);
+void setLED(int status);
 
 volatile int flag = 0;
 
@@ -42,11 +42,11 @@ void setupSwitch()
   EIMSK |= (1 << 2);
 }
 
-void setLED(int state)
+void setLED(int status)
 {
-  // state 1 means "ON"
-  // state 0 means "OFF"
-  if (state == 1)
+  // status 1 means "TURN ON"
+  // status 0 means "TURN OFF"
+  if (status == 1)
   {
     PORTF |= (1 << 0);
   }
@@ -64,7 +64,7 @@ int core(void)
   sei();
 
   // starts "on"
-  int state = 1;
+  int status = 1;
 
   while (1)
   {
@@ -73,10 +73,10 @@ int core(void)
     if (flag == 1)
     {
       cli();
-      // Read state of pin
-      state = (PIND >> 2) & 1;
-      // set the LED state
-      setLED(state);
+      // Read status of pin
+      status = (PIND >> 2) & 1;
+      // set the LED status
+      setLED(status);
       // reset flag
       flag = 0;
       sei();
