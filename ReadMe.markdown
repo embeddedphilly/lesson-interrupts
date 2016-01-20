@@ -1,5 +1,6 @@
 % EmbeddedPHL
 % Interrupts Lesson - 1/19/16
+%
 
 # Kata
 This lesson's Kata was on State Machines. You can find the kata here:
